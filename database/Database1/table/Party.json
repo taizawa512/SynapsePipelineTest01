@@ -1,0 +1,156 @@
+{
+	"name": "Party",
+	"properties": {
+		"Name": "Party",
+		"EntityType": "TABLE",
+		"TableType": "EXTERNAL",
+		"Namespace": {
+			"SchemaName": null,
+			"DatabaseName": "Database1",
+			"DatabaseId": null
+		},
+		"StorageDescriptor": {
+			"Distribution": null,
+			"Columns": [
+				{
+					"Name": "PartyId",
+					"Description": "The unique identifier of a Party.",
+					"OriginDataTypeName": {
+						"TypeName": "long",
+						"IsComplexType": false,
+						"IsNullable": false,
+						"Length": 0,
+						"Precision": 0,
+						"Scale": 0,
+						"Properties": {
+							"HIVE_TYPE_STRING": "long"
+						}
+					},
+					"BaseAttributeReference": {
+						"Entity": "Party.cdm.json/Party",
+						"Name": "PartyId"
+					}
+				},
+				{
+					"Name": "PartyName",
+					"Description": "The name of the Party.",
+					"OriginDataTypeName": {
+						"TypeName": "string",
+						"IsComplexType": false,
+						"IsNullable": true,
+						"Length": 128,
+						"Precision": 0,
+						"Scale": 0,
+						"Properties": {
+							"HIVE_TYPE_STRING": "string"
+						}
+					},
+					"BaseAttributeReference": {
+						"Entity": "Party.cdm.json/Party",
+						"Name": "PartyName"
+					}
+				},
+				{
+					"Name": "PartyTypeId",
+					"Description": "The unique identifier of a Party Type.",
+					"OriginDataTypeName": {
+						"TypeName": "integer",
+						"IsComplexType": false,
+						"IsNullable": true,
+						"Length": 0,
+						"Precision": 0,
+						"Scale": 0,
+						"Properties": {
+							"HIVE_TYPE_STRING": "integer"
+						}
+					},
+					"BaseAttributeReference": {
+						"Entity": "Party.cdm.json/Party",
+						"Name": "PartyTypeId"
+					}
+				},
+				{
+					"Name": "GlobalLocationNumber",
+					"Description": "The Global Location Number (GLN) is a simple tool used to uniquely identify locations. It can be used to identify physical locations such as a warehouse, legal entities, or a function / department within a legal entity. The GLN is part of the GS1 system of standards.",
+					"OriginDataTypeName": {
+						"TypeName": "decimal",
+						"IsComplexType": false,
+						"IsNullable": true,
+						"Length": 0,
+						"Precision": 13,
+						"Scale": 0,
+						"Properties": {
+							"HIVE_TYPE_STRING": "decimal"
+						}
+					},
+					"BaseAttributeReference": {
+						"Entity": "Party.cdm.json/Party",
+						"Name": "GlobalLocationNumber"
+					}
+				}
+			],
+			"ColumnSetEntityName": "a988bc0a-9395-4b9c-bf23-18eccd85f4c6",
+			"Format": {
+				"InputFormat": "org.apache.hadoop.mapred.SequenceFileInputFormat",
+				"OutputFormat": "org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat",
+				"FormatType": "csv",
+				"SerializeLib": "org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe",
+				"Properties": {
+					"path": "abfss://root@datalakestoragetaizawa.dfs.core.windows.net/Database1/Party",
+					"delimiter": ",",
+					"firstRowAsHeader": "false",
+					"multiLine": "false",
+					"serialization.format": "1",
+					"escape": "\\",
+					"quote": "\"",
+					"FormatTypeSetToDatabaseDefault": true,
+					"header": "false"
+				}
+			},
+			"Source": {
+				"Provider": "ADLS",
+				"Location": "abfss://root@datalakestoragetaizawa.dfs.core.windows.net/Database1/Party",
+				"Properties": {
+					"LinkedServiceName": "taizawatest001-WorkspaceDefaultStorage",
+					"LocationSetToDatabaseDefault": true
+				}
+			},
+			"Properties": {
+				"textinputformat.record.delimiter": ",",
+				"compression": "{\"type\":\"None\",\"level\":\"optimal\"}",
+				"derivedModelAttributeInfo": "{\"attributeReferences\":{\"PartyId\":{\"entity\":\"Party.cdm.json/Party\",\"name\":\"PartyId\"},\"PartyName\":{\"entity\":\"Party.cdm.json/Party\",\"name\":\"PartyName\"},\"PartyTypeId\":{\"entity\":\"Party.cdm.json/Party\",\"name\":\"PartyTypeId\"},\"GlobalLocationNumber\":{\"entity\":\"Party.cdm.json/Party\",\"name\":\"GlobalLocationNumber\"}}}"
+			},
+			"Compressed": false,
+			"SerDeInfo": null,
+			"IsStoredAsSubdirectories": false
+		},
+		"Owner": null,
+		"CreateTime": 0,
+		"LastAccessTime": 0,
+		"Retention": 0,
+		"Temporary": false,
+		"IsRewriteEnabled": false,
+		"ViewOriginalText": null,
+		"ViewExpandedText": null,
+		"Origin": {
+			"Type": "SPARK"
+		},
+		"OriginObjectId": null,
+		"IsSharedEntity": false,
+		"PublishStatus": "PUBLISHED",
+		"Properties": {
+			"DerivedModelEntityInfo": "{\"entityDirectives\":{\"baseEntityReference\":{\"name\":\"Party\",\"path\":\"Party.cdm.json/Party\"},\"description\":\"A party is an individual, organization, legal entity, social organization or business unit of interest to the business.\\n\\nParty is a concept that enables individuals, organizations, legal entities, social organization and business units to be related or defined with the context of roles, events and relationships.\\n\\nThis enables us to 'anchor' disparate instances or implementations of each of the above to a common or singular instance of that individual, organization, legal entity, social organization or business unit.\\n\\nFor example, a large business has 20 customer masters that are used internally.    PARTY enables the organization to identify and define each customer as a single party and relate (cleanse and synchronize) the multiple instances of customer to a single set of customer information.\\n\\nIt also allows the business to look at the multiple relationships that exist among parties playing different roles over various periods of time.    \\n\\nFor example, a business might have a vendor who is also a customer that has employees who are also customers of the business.     A business might have employees who are also customers and whose spouse or family members are also customers.\\n\\nIn short, party enables the business to examine and record the real-world interactions of individuals, organizations, legal entities, social organizations and business units as they perform those many roles that characterize their activities and relationships to other parties.      Party also provides an 'anchor' upon which to resolve multiple instances or definitions of that party so the business can develop a 'single-view' of the party.\",\"primaryKey\":[\"PartyId\"],\"projectionInfo\":{\"attributes\":[{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Party.cdm.json/Party\",\"name\":\"PartyId\"},\"dataType\":\"long\",\"description\":\"The unique identifier of a Party.\",\"isNullable\":false,\"name\":\"PartyId\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Party.cdm.json/Party\",\"name\":\"PartyName\"},\"dataType\":\"string\",\"dataTypeLength\":128,\"description\":\"The name of the Party.\",\"isNullable\":true,\"name\":\"PartyName\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Party.cdm.json/Party\",\"name\":\"PartyTypeId\"},\"dataType\":\"integer\",\"description\":\"The unique identifier of a Party Type.\",\"isNullable\":true,\"name\":\"PartyTypeId\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Party.cdm.json/Party\",\"name\":\"GlobalLocationNumber\"},\"dataType\":\"decimal\",\"dataTypeLength\":13,\"description\":\"The Global Location Number (GLN) is a simple tool used to uniquely identify locations. It can be used to identify physical locations such as a warehouse, legal entities, or a function / department within a legal entity. The GLN is part of the GS1 system of standards.\",\"isNullable\":true,\"scale\":0,\"name\":\"GlobalLocationNumber\"}]}}}",
+			"Description": "A party is an individual, organization, legal entity, social organization or business unit of interest to the business.\n\nParty is a concept that enables individuals, organizations, legal entities, social organization and business units to be related or defined with the context of roles, events and relationships.\n\nThis enables us to 'anchor' disparate instances or implementations of each of the above to a common or singular instance of that individual, organization, legal entity, social organization or business unit.\n\nFor example, a large business has 20 customer masters that are used internally.    PARTY enables the organization to identify and define each customer as a single party and relate (cleanse and synchronize) the multiple instances of customer to a single set of customer information.\n\nIt also allows the business to look at the multiple relationships that exist among parties playing different roles over various periods of time.    \n\nFor example, a business might have a vendor who is also a customer that has employees who are also customers of the business.     A business might have employees who are also customers and whose spouse or family members are also customers.\n\nIn short, party enables the business to examine and record the real-world interactions of individuals, organizations, legal entities, social organizations and business units as they perform those many roles that characterize their activities and relationships to other parties.      Party also provides an 'anchor' upon which to resolve multiple instances or definitions of that party so the business can develop a 'single-view' of the party.",
+			"DisplayFolderInfo": "{\"name\":\"Party\",\"colorCode\":\"#7D0F6C\"}",
+			"PrimaryKeys": "PartyId",
+			"spark.sql.sources.provider": "csv",
+			"x-ms-usageinfo": "AzureSynapseDatabaseTemplate",
+			"spark.sql.sources.schema.numParts": "1",
+			"spark.sql.sources.schema.part.0": "{\"type\":\"struct\",\"fields\":[{\"name\":\"PartyId\",\"type\":\"long\",\"nullable\":false,\"metadata\":{}},{\"name\":\"PartyName\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"PartyTypeId\",\"type\":\"integer\",\"nullable\":true,\"metadata\":{}},{\"name\":\"GlobalLocationNumber\",\"type\":\"decimal(13,0)\",\"nullable\":true,\"metadata\":{}}]}"
+		},
+		"ObjectVersion": 1,
+		"ObjectId": "057ed3a4-3688-4b12-b2f3-e710ad0eb99c",
+		"Description": "A party is an individual, organization, legal entity, social organization or business unit of interest to the business.\n\nParty is a concept that enables individuals, organizations, legal entities, social organization and business units to be related or defined with the context of roles, events and relationships.\n\nThis enables us to 'anchor' disparate instances or implementations of each of the above to a common or singular instance of that individual, organization, legal entity, social organization or business unit.\n\nFor example, a large business has 20 customer masters that are used internally.    PARTY enables the organization to identify and define each customer as a single party and relate (cleanse and synchronize) the multiple instances of customer to a single set of customer information.\n\nIt also allows the business to look at the multiple relationships that exist among parties playing different roles over various periods of time.    \n\nFor example, a business might have a vendor who is also a customer that has employees who are also customers of the business.     A business might have employees who are also customers and whose spouse or family members are also customers.\n\nIn short, party enables the business to examine and record the real-world interactions of individuals, organizations, legal entities, social organizations and business units as they perform those many roles that characterize their activities and relationships to other parties.      Party also provides an 'anchor' upon which to resolve multiple instances or definitions of that party so the business can develop a 'single-view' of the party."
+	},
+	"type": "TABLE"
+}

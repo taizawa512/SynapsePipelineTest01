@@ -1,0 +1,29 @@
+{
+	"name": "relationship-bghhkwgngl",
+	"properties": {
+		"Name": "relationship-bghhkwgngl",
+		"EntityType": "RELATIONSHIP",
+		"Namespace": {
+			"DatabaseName": "Database1"
+		},
+		"Origin": {
+			"Type": "SPARK"
+		},
+		"FromTableName": "Customer",
+		"ToTableName": "Transaction",
+		"ColumnRelationshipInformations": [
+			{
+				"FromColumnName": "CustomerId",
+				"ToColumnName": "CustomerId"
+			}
+		],
+		"RelationshipType": 0,
+		"Properties": {
+			"DerivedModelRelationshipInfo": "{\"baseRelationship\":{\"fromEntity\":\"Customer.cdm.json/Customer\",\"toEntity\":\"Transaction.cdm.json/Transaction\",\"joinPairs\":[{\"fromAttribute\":\"CustomerId\",\"toAttribute\":\"CustomerId\"}]}}"
+		},
+		"PublishStatus": "PUBLISHED",
+		"ObjectVersion": 1,
+		"ObjectId": "5c8abb7c-6110-43a7-b9e6-b4b2587fc121"
+	},
+	"type": "RELATIONSHIP"
+}

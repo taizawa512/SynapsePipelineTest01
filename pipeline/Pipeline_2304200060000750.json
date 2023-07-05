@@ -1,0 +1,140 @@
+{
+	"name": "Pipeline_2304200060000750",
+	"properties": {
+		"description": "ファイル名に連番を付与",
+		"activities": [
+			{
+				"name": "Get Metadata1",
+				"type": "GetMetadata",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataset": {
+						"referenceName": "Binary1",
+						"type": "DatasetReference",
+						"parameters": {
+							"directory": "2023/04"
+						}
+					},
+					"fieldList": [
+						"childItems"
+					],
+					"storeSettings": {
+						"type": "AzureBlobFSReadSettings",
+						"recursive": true,
+						"enablePartitionDiscovery": false
+					},
+					"formatSettings": {
+						"type": "BinaryReadSettings"
+					}
+				}
+			},
+			{
+				"name": "Filter1",
+				"type": "Filter",
+				"dependsOn": [
+					{
+						"activity": "Get Metadata1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('Get Metadata1').output.childItems",
+						"type": "Expression"
+					},
+					"condition": {
+						"value": "@startswith(item().name, substring(pipeline().parameters.targetFileName, 0, lastIndexOf(pipeline().parameters.targetFileName, '.')))",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Filter1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "BinarySource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true
+						},
+						"formatSettings": {
+							"type": "BinaryReadSettings"
+						}
+					},
+					"sink": {
+						"type": "BinarySink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						}
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "Binary_2304200060000750",
+						"type": "DatasetReference",
+						"parameters": {
+							"container": "2304200060000750",
+							"directory": "source",
+							"filename": {
+								"value": "@pipeline().parameters.targetFileName",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "Binary_2304200060000750",
+						"type": "DatasetReference",
+						"parameters": {
+							"container": "2304200060000750",
+							"directory": "2023/04",
+							"filename": {
+								"value": "@if(equals(activity('Filter1').output.FilteredItemsCount, 0),\n    pipeline().parameters.targetFileName,\n    concat(\n        substring(pipeline().parameters.targetFileName, 0, lastIndexOf(pipeline().parameters.targetFileName,'.')),\n        '_',\n        string(activity('Filter1').output.FilteredItemsCount),\n        substring(pipeline().parameters.targetFileName, lastIndexOf(pipeline().parameters.targetFileName, '.'),sub(length(pipeline().parameters.targetFileName),lastIndexOf(pipeline().parameters.targetFileName, '.')))))",
+								"type": "Expression"
+							}
+						}
+					}
+				]
+			}
+		],
+		"parameters": {
+			"targetFileName": {
+				"type": "string",
+				"defaultValue": "test.csv"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2023-04-24T10:10:58Z"
+	},
+	"type": "Microsoft.Synapse/workspaces/pipelines"
+}

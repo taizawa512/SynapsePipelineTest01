@@ -1,0 +1,19 @@
+{
+	"name": "SharePointOnlineList_jpdsd2",
+	"type": "Microsoft.Synapse/workspaces/linkedservices",
+	"properties": {
+		"description": "https://jpdsd2.sharepoint.com/sites/SiteTest20230301",
+		"annotations": [],
+		"type": "SharePointOnlineList",
+		"typeProperties": {
+			"siteUrl": "https://jpdsd2.sharepoint.com/sites/SiteTest20230301",
+			"tenantId": "a0a58ec7-09e8-41f9-ae5a-0d67d1ccabc5",
+			"servicePrincipalId": "4d0976c7-9efc-4b69-b2bf-e5dbc1d38a13",
+			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIlNZTkFQU0VANjc3RDhFQjYtN0RBOC00RDkyLTk2MjMtMkFCRTE4MThBODkzXzA2NjMxMjljLTU5MDUtNDQwZi05NzkyLWIyMmM2ZDA1OWY5MCINCn0="
+		},
+		"connectVia": {
+			"referenceName": "AutoResolveIntegrationRuntime",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}

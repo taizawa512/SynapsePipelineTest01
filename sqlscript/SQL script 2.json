@@ -1,0 +1,17 @@
+{
+	"name": "SQL script 2",
+	"properties": {
+		"content": {
+			"query": "SET ANSI_NULLS ON\nGO\nSET QUOTED_IDENTIFIER ON\nGO\n\nCREATE TABLE [hcnh].[E001_01S]\n( \n\t[lift_date] [date]  NULL,\n\t[supply_bin] [nvarchar](4000)  NULL,\n\t[material_code] [int]  NULL,\n\t[storage_location] [nvarchar](4000)  NULL,\n\t[material_brand] [nvarchar](4000)  NULL,\n\t[liftval_wet] [float]  NULL,\n\t[rowno] [int]  NULL,\n\t[filename] [nvarchar](4000)  NULL,\n\t[macrodatetime] [datetime]  NULL,\n\t[regdate] [datetime]  NULL\n)\nWITH\n(\n\tDISTRIBUTION = ROUND_ROBIN,\n\tCLUSTERED COLUMNSTORE INDEX\n)\nGO",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "SampleSQL",
+				"poolName": "SampleSQL"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

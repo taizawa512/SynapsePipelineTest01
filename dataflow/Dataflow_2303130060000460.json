@@ -1,0 +1,108 @@
+{
+	"name": "Dataflow_2303130060000460",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "Excel1",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "AzureSynapseAnalyticsTable2",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				},
+				{
+					"dataset": {
+						"referenceName": "AzureSynapseAnalyticsTable3",
+						"type": "DatasetReference"
+					},
+					"name": "sink2"
+				}
+			],
+			"transformations": [
+				{
+					"name": "derivedColumn2"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          lift_date as date,",
+				"          supply_bin as string,",
+				"          material_code as integer,",
+				"          storage_location as string,",
+				"          material_brand as string,",
+				"          liftval_wet as double,",
+				"          rowno as integer,",
+				"          filename as string,",
+				"          macrodatetime as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: true) ~> source1",
+				"source1 derive(regdate = currentTimestamp(),",
+				"          macrodatetime = toTimestamp(translate(translate(macrodatetime,\"T\",\" \"),\"Z\",\"\"))) ~> derivedColumn2",
+				"derivedColumn2 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          lift_date as date,",
+				"          supply_bin as string,",
+				"          material_code as integer,",
+				"          storage_location as string,",
+				"          material_brand as string,",
+				"          liftval_wet as double,",
+				"          rowno as integer,",
+				"          filename as string,",
+				"          macrodatetime as timestamp,",
+				"          regdate as timestamp",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     staged: false,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink1",
+				"derivedColumn2 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          lift_date as date,",
+				"          supply_bin as string,",
+				"          material_code as integer,",
+				"          storage_location as string,",
+				"          material_brand as string,",
+				"          liftval_wet as double,",
+				"          regdate as timestamp",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     staged: false,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          lift_date,",
+				"          supply_bin,",
+				"          material_code,",
+				"          storage_location,",
+				"          material_brand,",
+				"          liftval_wet,",
+				"          regdate",
+				"     )) ~> sink2"
+			]
+		}
+	}
+}

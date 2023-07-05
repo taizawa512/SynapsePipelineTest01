@@ -1,0 +1,29 @@
+{
+	"name": "relationship-njdoauvkni",
+	"properties": {
+		"Name": "relationship-njdoauvkni",
+		"EntityType": "RELATIONSHIP",
+		"Namespace": {
+			"DatabaseName": "Database1"
+		},
+		"Origin": {
+			"Type": "SPARK"
+		},
+		"FromTableName": "TransactionLineItem",
+		"ToTableName": "TransactionLineItem",
+		"ColumnRelationshipInformations": [
+			{
+				"FromColumnName": "TransactionLineItemId",
+				"ToColumnName": "ReturnOfTransactionLineItemId"
+			}
+		],
+		"RelationshipType": 0,
+		"Properties": {
+			"DerivedModelRelationshipInfo": "{\"baseRelationship\":{\"fromEntity\":\"TransactionLineItem.cdm.json/TransactionLineItem\",\"toEntity\":\"TransactionLineItem.cdm.json/TransactionLineItem\",\"joinPairs\":[{\"fromAttribute\":\"TransactionLineItemId\",\"toAttribute\":\"ReturnOfTransactionLineItemId\"}]}}"
+		},
+		"PublishStatus": "PUBLISHED",
+		"ObjectVersion": 1,
+		"ObjectId": "eb6eb50f-2116-4aeb-b136-62046f0e7f93"
+	},
+	"type": "RELATIONSHIP"
+}

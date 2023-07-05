@@ -1,0 +1,58 @@
+{
+	"name": "Excel1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"sheetName": "Sheet1",
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"container": "2303130060000460"
+			},
+			"firstRowAsHeader": true
+		},
+		"schema": [
+			{
+				"name": "lift_date",
+				"type": "String"
+			},
+			{
+				"name": "supply_bin",
+				"type": "String"
+			},
+			{
+				"name": "material_code",
+				"type": "String"
+			},
+			{
+				"name": "storage_location",
+				"type": "String"
+			},
+			{
+				"name": "material_brand",
+				"type": "String"
+			},
+			{
+				"name": "liftval_wet",
+				"type": "String"
+			},
+			{
+				"name": "rowno",
+				"type": "String"
+			},
+			{
+				"name": "filename",
+				"type": "String"
+			},
+			{
+				"name": "macrodatetime",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.Synapse/workspaces/datasets"
+}

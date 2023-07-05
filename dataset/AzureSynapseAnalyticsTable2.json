@@ -1,0 +1,65 @@
+{
+	"name": "AzureSynapseAnalyticsTable2",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSynapseAnalytics2",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlDWTable",
+		"schema": [
+			{
+				"name": "lift_date",
+				"type": "date"
+			},
+			{
+				"name": "supply_bin",
+				"type": "nvarchar"
+			},
+			{
+				"name": "material_code",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "storage_location",
+				"type": "nvarchar"
+			},
+			{
+				"name": "material_brand",
+				"type": "nvarchar"
+			},
+			{
+				"name": "liftval_wet",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "rowno",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "filename",
+				"type": "nvarchar"
+			},
+			{
+				"name": "macrodatetime",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "regdate",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			}
+		],
+		"typeProperties": {
+			"schema": "hcnh",
+			"table": "E001_01S"
+		}
+	},
+	"type": "Microsoft.Synapse/workspaces/datasets"
+}

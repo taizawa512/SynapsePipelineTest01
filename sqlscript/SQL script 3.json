@@ -1,0 +1,17 @@
+{
+	"name": "SQL script 3",
+	"properties": {
+		"content": {
+			"query": "SELECT TOP (100) [lift_date]\n,[supply_bin]\n,[material_code]\n,[storage_location]\n,[material_brand]\n,[liftval_wet]\n,[regdate]\n FROM [hcnh].[E001_01S]\n ORDER BY [rowno] desc",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "SampleSQL",
+				"poolName": "SampleSQL"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}
