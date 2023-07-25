@@ -1,0 +1,34 @@
+{
+	"name": "Excel2",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"sheetName": "sample",
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "meisai",
+				"fileSystem": "users"
+			},
+			"firstRowAsHeader": true
+		},
+		"schema": [
+			{
+				"name": "ID",
+				"type": "String"
+			},
+			{
+				"name": "NAME",
+				"type": "String"
+			},
+			{
+				"name": "VALUE",
+				"type": "String"
+			}
+		]
+	}
+}
