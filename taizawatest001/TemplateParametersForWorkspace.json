@@ -52,9 +52,6 @@
 		},
 		"taizawatest001-WorkspaceDefaultStorage_properties_typeProperties_url": {
 			"value": "https://datalakestoragetaizawa.dfs.core.windows.net"
-		},
-		"Trigger 1_properties_typeProperties_scope": {
-			"value": "/subscriptions/d050af2c-cbd5-40e7-a95d-c6119e9cf256/resourceGroups/RG-taizawa001/providers/Microsoft.Storage/storageAccounts/storageacctaizawa"
 		}
 	}
 }
