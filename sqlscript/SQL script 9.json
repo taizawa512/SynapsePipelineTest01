@@ -1,0 +1,17 @@
+{
+	"name": "SQL script 9",
+	"properties": {
+		"content": {
+			"query": "CREATE PROC [dbo].[sp_CARS_INFO] AS\nBEGIN\n    SET NOCOUNT ON\n    --新テーブルがあれば削除\n    IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[CARS_INFO_new]') AND type in (N'U'))\n    DROP TABLE [dbo].[CARS_INFO_new]\n    \n    --新テーブル作成\n    CREATE TABLE [dbo].[CARS_INFO_new]\n    WITH\n    (\n         DISTRIBUTION = ROUND_ROBIN\n    )\n    AS\n    SELECT [ID]\n          ,[Name]\n          ,[Model]\n          ,[Length]\n      FROM [dbo].[CARS_INFO]\n\nEND\n",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "SampleSQL2",
+				"poolName": "SampleSQL2"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

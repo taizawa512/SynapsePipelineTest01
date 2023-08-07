@@ -1,0 +1,20 @@
+{
+	"name": "Parquet2_Gen2_default",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "taizawatest001-WorkspaceDefaultStorage",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "TSUKUBA_FACTORY/10_RawData/i-Reporter/OracleTable/99_Work/TT_CC_IRDLS_MDB_TR_MAR_INFO",
+				"fileSystem": "root"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	}
+}

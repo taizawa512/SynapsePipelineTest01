@@ -1,0 +1,17 @@
+{
+	"name": "SQL script 5",
+	"properties": {
+		"content": {
+			"query": "--SELECT * FROM sys.external_file_formats\n\n--SELECT * FROM sys.external_data_sources WHERE name = 'root_datalakestoragetaizawa _dfs_core_windows_net'\n\n--SELECT TOP 100 * FROM [dbo].[CARS_INFO]\n\nSELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[CARS_INFO]') AND type in (N'U')",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "SampleSQL2",
+				"poolName": "SampleSQL2"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

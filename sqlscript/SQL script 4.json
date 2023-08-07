@@ -1,0 +1,17 @@
+{
+	"name": "SQL script 4",
+	"properties": {
+		"content": {
+			"query": "CREATE EXTERNAL TABLE [dbo].[CARS_INFO] (\n\t[ID] [int]  NULL,\n\t[Name] [nvarchar](max)  NULL,\n\t[Model] [nvarchar](max)  NULL,\n\t[Length] [int]  NULL\n\t)\n\tWITH (\n\tLOCATION = 'TSUKUBA_FACTORY/10_RawData/i-Reporter/OracleTable/99_Work/TT_CC_IRDLS_MDB_TR_MAR_INFO',\n\tDATA_SOURCE = [root_datalakestoragetaizawa _dfs_core_windows_net],\n\tFILE_FORMAT = [SynapseParquetFormat]\n\t)\nGO",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "SampleSQL2",
+				"poolName": "SampleSQL2"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}
