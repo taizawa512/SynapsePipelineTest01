@@ -9596,6 +9596,319 @@
 			},
 			"dependsOn": [],
 			"location": "japaneast"
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/SQL script 4')]",
+			"type": "Microsoft.Synapse/workspaces/sqlscripts",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"content": {
+					"query": "CREATE EXTERNAL TABLE [dbo].[CARS_INFO] (\n\t[ID] [int]  NULL,\n\t[Name] [nvarchar](max)  NULL,\n\t[Model] [nvarchar](max)  NULL,\n\t[Length] [int]  NULL\n\t)\n\tWITH (\n\tLOCATION = 'TSUKUBA_FACTORY/10_RawData/i-Reporter/OracleTable/99_Work/TT_CC_IRDLS_MDB_TR_MAR_INFO',\n\tDATA_SOURCE = [root_datalakestoragetaizawa _dfs_core_windows_net],\n\tFILE_FORMAT = [SynapseParquetFormat]\n\t)\nGO",
+					"metadata": {
+						"language": "sql"
+					},
+					"currentConnection": {
+						"databaseName": "SampleSQL2",
+						"poolName": "SampleSQL2"
+					},
+					"resultLimit": 5000
+				},
+				"type": "SqlQuery"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/SQL script 5')]",
+			"type": "Microsoft.Synapse/workspaces/sqlscripts",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"content": {
+					"query": "--SELECT * FROM sys.external_file_formats\n\n--SELECT * FROM sys.external_data_sources WHERE name = 'root_datalakestoragetaizawa _dfs_core_windows_net'\n\n--SELECT TOP 100 * FROM [dbo].[CARS_INFO]\n\nSELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[CARS_INFO]') AND type in (N'U')",
+					"metadata": {
+						"language": "sql"
+					},
+					"currentConnection": {
+						"databaseName": "SampleSQL2",
+						"poolName": "SampleSQL2"
+					},
+					"resultLimit": 5000
+				},
+				"type": "SqlQuery"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/Copt_Test')]",
+			"type": "Microsoft.Synapse/workspaces/pipelines",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"description": "csv to parquet",
+				"activities": [
+					{
+						"name": "Copy data1",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobFSReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "ParquetSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								},
+								"formatSettings": {
+									"type": "ParquetWriteSettings"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "DelimitedText_Gen2Default",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "Parquet2_Gen2_default",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/datasets/DelimitedText_Gen2Default')]",
+				"[concat(variables('workspaceId'), '/datasets/Parquet2_Gen2_default')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/DelimitedText_Gen2Default')]",
+			"type": "Microsoft.Synapse/workspaces/datasets",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "taizawatest001-WorkspaceDefaultStorage",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "SQL script 10.csv",
+						"folderPath": "TSUKUBA_FACTORY",
+						"fileSystem": "root"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "Make",
+						"type": "String"
+					},
+					{
+						"name": "Model",
+						"type": "String"
+					},
+					{
+						"name": "Type",
+						"type": "String"
+					},
+					{
+						"name": "Origin",
+						"type": "String"
+					},
+					{
+						"name": "DriveTrain",
+						"type": "String"
+					},
+					{
+						"name": "Length",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/linkedServices/taizawatest001-WorkspaceDefaultStorage')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/Parquet2_Gen2_default')]",
+			"type": "Microsoft.Synapse/workspaces/datasets",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "taizawatest001-WorkspaceDefaultStorage",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": "TSUKUBA_FACTORY/10_RawData/i-Reporter/OracleTable/99_Work/TT_CC_IRDLS_MDB_TR_MAR_INFO",
+						"fileSystem": "root"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/linkedServices/taizawatest001-WorkspaceDefaultStorage')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/SQL script 9')]",
+			"type": "Microsoft.Synapse/workspaces/sqlscripts",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"content": {
+					"query": "CREATE PROC [dbo].[sp_CARS_INFO] AS\nBEGIN\n    SET NOCOUNT ON\n    --新テーブルがあれば削除\n    IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[CARS_INFO_new]') AND type in (N'U'))\n    DROP TABLE [dbo].[CARS_INFO_new]\n    \n    --新テーブル作成\n    CREATE TABLE [dbo].[CARS_INFO_new]\n    WITH\n    (\n         DISTRIBUTION = ROUND_ROBIN\n    )\n    AS\n    SELECT [ID]\n          ,[Name]\n          ,[Model]\n          ,[Length]\n      FROM [dbo].[CARS_INFO]\n\nEND\n",
+					"metadata": {
+						"language": "sql"
+					},
+					"currentConnection": {
+						"databaseName": "SampleSQL2",
+						"poolName": "SampleSQL2"
+					},
+					"resultLimit": 5000
+				},
+				"type": "SqlQuery"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/SQL script 10')]",
+			"type": "Microsoft.Synapse/workspaces/sqlscripts",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"content": {
+					"query": "CREATE EXTERNAL TABLE [dbo].[CARS_INFO] (\n\t[ID] [int]  NULL,\n\t[Name] [nvarchar](50)  NULL,\n\t[Model] [nvarchar](50)  NULL,\n\t[Length] [int]  NULL\n\t)\n\tWITH (\n\tLOCATION = 'TSUKUBA_FACTORY/10_RawData/i-Reporter/OracleTable/99_Work/TT_CC_IRDLS_MDB_TR_MAR_INFO',\n\tDATA_SOURCE = [root_datalakestoragetaizawa _dfs_core_windows_net],\n\tFILE_FORMAT = [SynapseParquetFormat]\n)",
+					"metadata": {
+						"language": "sql"
+					},
+					"currentConnection": {
+						"databaseName": "SampleSQL2",
+						"poolName": "SampleSQL2"
+					},
+					"resultLimit": 5000
+				},
+				"type": "SqlQuery"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/SQLPoolStoredProc')]",
+			"type": "Microsoft.Synapse/workspaces/pipelines",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"activities": [
+					{
+						"name": "SQL pool stored procedure1",
+						"type": "SqlPoolStoredProcedure",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"sqlPool": {
+							"referenceName": "SampleSQL2",
+							"type": "SqlPoolReference"
+						},
+						"typeProperties": {
+							"storedProcedureName": "[dbo].[sp_CARS_INFO]"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/sqlPools/SampleSQL2')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/SQL script 11')]",
+			"type": "Microsoft.Synapse/workspaces/sqlscripts",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"content": {
+					"query": "\n -- TODO: Set parameter values here \n\n EXECUTE [dbo].[sp_CARS_INFO]\n",
+					"metadata": {
+						"language": "sql"
+					},
+					"currentConnection": {
+						"databaseName": "SampleSQL2",
+						"poolName": "SampleSQL2"
+					},
+					"resultLimit": 5000
+				},
+				"type": "SqlQuery"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/SQL script 12')]",
+			"type": "Microsoft.Synapse/workspaces/sqlscripts",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"content": {
+					"query": "SELECT TOP (100) [ID]\n,[Name]\n,[Model]\n,[Length]\n FROM [dbo].[CARS_INFO_new]",
+					"metadata": {
+						"language": "sql"
+					},
+					"currentConnection": {
+						"databaseName": "SampleSQL2",
+						"poolName": "SampleSQL2"
+					},
+					"resultLimit": 5000
+				},
+				"type": "SqlQuery"
+			},
+			"dependsOn": []
 		}
 	]
 }
