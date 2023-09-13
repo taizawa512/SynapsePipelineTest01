@@ -7,7 +7,7 @@
 			"url": "https://taizawatest001.dev.azuresynapse.net/queryPipelineRuns?api-version=2020-12-01",
 			"enableServerCertificateValidation": true,
 			"authenticationType": "ManagedServiceIdentity",
-			"aadResourceId": "https://management.azure.com/"
+			"aadResourceId": "https://dev.azuresynapse.net/"
 		},
 		"connectVia": {
 			"referenceName": "AutoResolveIntegrationRuntime",
