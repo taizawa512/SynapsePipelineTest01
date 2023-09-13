@@ -1,0 +1,168 @@
+{
+	"name": "Pipeline 4",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "RestSource",
+						"httpRequestTimeout": "00:01:40",
+						"requestInterval": "00.00:00:00.010",
+						"requestMethod": "POST",
+						"requestBody": "{\n  \"lastUpdatedAfter\": \"2023-09-01T00:00:00\",\n  \"lastUpdatedBefore\": \"2023-09-11T00:00:00\"\n}",
+						"paginationRules": {
+							"supportRFC5988": "true"
+						}
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"path": "['id']"
+								},
+								"sink": {
+									"name": "id"
+								}
+							},
+							{
+								"source": {
+									"path": "['runId']"
+								},
+								"sink": {
+									"name": "runId"
+								}
+							},
+							{
+								"source": {
+									"path": "['runGroupId']"
+								},
+								"sink": {
+									"name": "runGroupId"
+								}
+							},
+							{
+								"source": {
+									"path": "['pipelineName']"
+								},
+								"sink": {
+									"name": "pipelineName"
+								}
+							},
+							{
+								"source": {
+									"path": "['parameters']"
+								},
+								"sink": {
+									"name": "parameters"
+								}
+							},
+							{
+								"source": {
+									"path": "['runStart']"
+								},
+								"sink": {
+									"name": "runStart"
+								}
+							},
+							{
+								"source": {
+									"path": "['runEnd']"
+								},
+								"sink": {
+									"name": "runEnd"
+								}
+							},
+							{
+								"source": {
+									"path": "['durationInMs']"
+								},
+								"sink": {
+									"name": "durationInMs"
+								}
+							},
+							{
+								"source": {
+									"path": "['status']"
+								},
+								"sink": {
+									"name": "status"
+								}
+							},
+							{
+								"source": {
+									"path": "['message']"
+								},
+								"sink": {
+									"name": "message"
+								}
+							},
+							{
+								"source": {
+									"path": "['pipelineReturnValue']"
+								},
+								"sink": {
+									"name": "pipelineReturnValue"
+								}
+							},
+							{
+								"source": {
+									"path": "['lastUpdated']"
+								},
+								"sink": {
+									"name": "lastUpdated"
+								}
+							},
+							{
+								"source": {
+									"path": "['isLatest']"
+								},
+								"sink": {
+									"name": "isLatest"
+								}
+							}
+						],
+						"collectionReference": "$['value']",
+						"mapComplexValuesToString": true
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "RestResource1",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DelimitedText3",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"annotations": []
+	}
+}
